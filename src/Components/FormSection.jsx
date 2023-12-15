@@ -11,6 +11,11 @@ function FormSection({ generateResponse }) {
     }
   }
 
+  function handleExampleInput(text) {
+    setNewQuestion(text);
+    generateResponse(newQuestion, setNewQuestion);
+  }
+
   return (
     <div className="form-section">
       <textarea
@@ -28,6 +33,28 @@ function FormSection({ generateResponse }) {
       >
         Generate Response 🤖
       </button>
+      <div className="examples">
+        <div
+          className="div-examples"
+          onClick={() =>
+            handleExampleInput("Tell me a fun fact about the roman empire")
+          }
+        >
+          <h4>Tell me a fun fact</h4>
+          <p>about the Roman Empire</p>
+        </div>
+        <div
+          className="div-examples"
+          onClick={() =>
+            handleExampleInput(
+              "how to make HTTP request using Javascript language."
+            )
+          }
+        >
+          <h4>How to make HTTP request</h4>
+          <p>using Javascript langauge</p>
+        </div>
+      </div>
     </div>
   );
 }

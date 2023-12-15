@@ -26,6 +26,9 @@ function App() {
     const result = await model.generateContent({
       contents: [{ role: "user", parts }],
       generationConfig,
+    }).catch(() => {
+      alert('Too Many Request in Given Time, Please Try Again.')
+      hideLoader();
     });
 
     const response = result.response;
