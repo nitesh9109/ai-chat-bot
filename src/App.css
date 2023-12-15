@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    /* background: #1D1E20; */
+    background-color: #000;
+    ;
+    color: #DADADB;
+    max-width: 800px;
+    margin: 0 auto;
+    /* background-color: #1f1f1f; */
+}
+
+
+
+.header-section {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.header-section h1 {
+    font-size: 2.7rem;
+    font-weight: 700;
+}
+
+.header-section p {
+    font-size: 1rem;
+    font-weight: 300;
+    margin-top: 10px;
+}
+
+.form-section {
+    width: 100%;
+    /* height: auto; */
+    margin: 20px auto;
+}
+
+.form-control {
+    background-color: #2f2f2f;
+    outline: none;
+    resize: none;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.5s ease-in-out;
+}
+
+
+textarea,
+button {
+    color: white;
+    width: 100%;
+    border-radius: 8px;
+    border: none;
+    padding: 15px;
+
+}
+
+.btn {
+    color: black;
+    cursor: pointer;
+    margin-top: 10px;
+    background-color: rgb(255, 255, 255, 0.5);
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+
+.btn:hover {
+    background-color: rgb(255, 255, 255, 0.7);
+}
+
+.hr-line {
+    margin: 70px 0 20px;
+    border: 1px solid #343536;
+}
+
+.answer-section {
+    margin: 30px 0;
+    position: relative;
+}
+
+.answer-section .question {
+    background-color: #343536;
+    padding: 20px;
+    border-radius: 10px 10px 0 0;
+}
+
+.answer-section .answer {
+    /* background-color: #343536; */
+    background-color: #0e0e0f;
+    padding: 20px;
+    border-radius: 0 0 10px 10px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 32px;
+}
+
+.answer-section .answer h4 {
+    color: rgba(49, 127, 206, 0.8);
+    letter-spacing: 1px;
+}
+
+.copy-icon {
+    position: absolute;
+    background-color: #000000;
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: -10px;
+    right: -10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+
+
+.copy-icon:hover {
+    background-color: #343536;
+}
+
+/* css media query */
+
+@media only screen and (max-width : 820px) {
+
+    .header-section,
+    .form-section,
+    .answer-section {
+        padding: 15px;
+    }
+}
+
+/* css loader */
