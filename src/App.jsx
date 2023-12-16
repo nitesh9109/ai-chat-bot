@@ -76,7 +76,7 @@ function App() {
     <div id="main-box" ref={containerRef}>
       <div className="header-section">
         <div className="img img-container">
-          <img className="rotate-img" src="./public/google-ai-1.svg" alt="" />
+          <img className="rotate-img" src="/google-ai-1.svg" alt="" />
         </div>
         <h1>🤖 How Can I Help You Today? 🤖</h1>
       </div>
