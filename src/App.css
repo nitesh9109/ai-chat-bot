@@ -20,19 +20,18 @@ body {
 
 
 .header-section {
-    margin: 30px 0;
+    margin-block: 20px 50px;
     text-align: center;
 }
 
 .header-section h1 {
-    font-size: 2.7rem;
+    font-size: 1.5rem;
     font-weight: 700;
 }
 
-.header-section p {
-    font-size: 1rem;
-    font-weight: 300;
-    margin-top: 10px;
+.header-section .img img {
+    width: 100px;
+    margin: 10px;
 }
 
 .form-section {
@@ -52,7 +51,7 @@ body {
 
 
 textarea,
-button {
+.btn {
     color: white;
     width: 100%;
     border-radius: 8px;

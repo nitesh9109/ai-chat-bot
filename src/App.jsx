@@ -18,21 +18,22 @@ function App() {
       temperature: 0.4,
       topK: 1,
       topP: 1,
-      maxOutputTokens: 2048,
+      maxOutputTokens: 100,
     };
 
     const parts = [{ text: newQuestion }];
 
-    const result = await model.generateContent({
-      contents: [{ role: "user", parts }],
-      generationConfig,
-    }).catch(() => {
-      alert('Too Many Request in Given Time, Please Try Again.')
-      hideLoader();
-    });
+    const result = await model
+      .generateContent({
+        contents: [{ role: "user", parts }],
+        generationConfig,
+      })
+      .catch(() => {
+        alert("Too Many Request in Given Time, Please Try Again.");
+        hideLoader();
+      });
 
     const response = result.response;
-    console.log(response.text());
     if (response.text()) {
       setResponseValue([
         {
@@ -62,14 +63,10 @@ function App() {
   return (
     <div>
       <div className="header-section">
-        <h1>Google Gemini-Pro 🤖</h1>
-        <p>
-          Hello! I'm an AI chatbot powered by the latest Gemini-Pro AI model
-          from Google. I'm here to assist you with your queries. Feel free to
-          ask anything, and I'll provide the best answers I can. Please keep in
-          mind that I operate based on set rules and may not grasp everything
-          like a human would.
-        </p>
+        <div className="img">
+          <img src="./public/google-ai-1.svg" alt="" />
+        </div>
+        <h1>🤖 How Can I Help You Today? 🤖</h1>
       </div>
 
       <FormSection generateResponse={generateResponse} />
