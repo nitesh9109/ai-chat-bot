@@ -6,18 +6,19 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    /* background: #1D1E20; */
-    background-color: #000;
-    ;
-    color: #DADADB;
-    max-width: 800px;
-    margin: 0 auto;
-    /* background-color: #1f1f1f; */
+html {
+    scroll-behavior: smooth;
 }
 
-
+body {
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+    background-color: rgb(0, 0, 0, 0.95);
+    color: #DADADB;
+    max-width: 1300px;
+    margin: 0 auto;
+    font-size: 1rem;
+}
 
 .header-section {
     margin-block: 20px 50px;
@@ -36,7 +37,6 @@ body {
 
 .form-section {
     width: 100%;
-    /* height: auto; */
     margin: 20px auto;
 }
 
@@ -57,7 +57,6 @@ textarea,
     border-radius: 8px;
     border: none;
     padding: 15px;
-
 }
 
 .btn {
@@ -66,7 +65,7 @@ textarea,
     margin-top: 10px;
     background-color: rgb(255, 255, 255, 0.7);
     font-size: 1.2rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.5s ease-in-out;
 }
@@ -92,32 +91,70 @@ textarea,
     border-radius: 10px 10px 0 0;
 }
 
+p {
+    margin: 0;
+    padding: 0;
+}
+
+h1,
+h2,
+h3,
+ol,
+ul {
+    margin: 0;
+}
+
+h1 {
+    font-size: min(6vw, 2rem);
+}
+
+a {
+    color: #3b82f6;
+}
+
+
 .answer-section .answer {
-    /* background-color: #343536; */
-    background-color: #0e0e0f;
+    /* background-color: #0e0e0f; */
+    /* padding:  50px 0; */
+    background-color: transparent;
     padding: 20px;
     border-radius: 0 0 10px 10px;
     color: rgba(255, 255, 255, 0.7);
-    line-height: 32px;
 }
 
-.answer-section .answer h4 {
-    color: rgba(49, 127, 206, 0.8);
-    letter-spacing: 1px;
-    margin-top: 15px;
+ol li {
+    margin: 10px 0;
 }
 
-.answer-section .answer h5 {
+ul li {
+    margin: 10px 0;
+    display: inline;
+}
+
+strong {
     display: inline-block;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
-    /* color: rgba(49, 127, 206, 0.8); */
-    letter-spacing: 1px;
+    margin: 10px 0;
+}
+
+h3 {
+    margin: 10px 0;
+}
+
+p {
+    margin: 10px 0;
 }
 
 pre {
     white-space: pre-wrap;
     /* word-wrap: break-word;  */
+}
+
+code {
+    border-radius: 10px;
+}
+
+h2 {
+    padding: 10px 0;
 }
 
 .copy-icon {
@@ -165,7 +202,7 @@ pre {
 }
 
 .examples .div-examples:hover {
-    background-color: #0e0e0f;
+    background-color: #1d1e1f;
 }
 
 .div-examples h4 {
@@ -174,6 +211,7 @@ pre {
 
 .div-examples p {
     font-size: 0.9rem;
+    margin: 0;
 }
 
 
@@ -183,5 +221,33 @@ pre {
     .form-section,
     .answer-section {
         padding: 15px;
+    }
+}
+
+
+/* Apply styles to the image container */
+.img-container {
+    position: relative;
+    /* Required for absolute positioning of the image */
+    animation: rotate 10s linear infinite;
+    /* Apply animation to the container */
+}
+
+/* Apply styles to the image */
+.rotate-image {
+    width: 100%;
+    /* Adjust dimensions if needed */
+    height: 100%;
+    /* Adjust dimensions if needed */
+}
+
+/* Define the rotation animation */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
     }
 }

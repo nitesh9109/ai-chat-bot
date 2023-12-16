@@ -12,8 +12,9 @@ function FormSection({ generateResponse }) {
   }
 
   function handleExampleInput(text) {
-    setNewQuestion(text);
-    generateResponse(newQuestion, setNewQuestion);
+    const updatedQuestion = text;
+    setNewQuestion(updatedQuestion);
+    generateResponse(updatedQuestion, setNewQuestion);
   }
 
   return (
