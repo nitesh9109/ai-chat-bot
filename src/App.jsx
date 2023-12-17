@@ -10,6 +10,8 @@ import "highlight.js/styles/github-dark.css";
 // import "highlight.js/styles/stackoverflow-dark.css";
 // import 'highlight.js/styles/night-owl.css';
 
+let isRunning = true;
+
 function App() {
   const [responseValue, setResponseValue] = useState([]);
   const containerRef = useRef(null);
@@ -34,32 +36,40 @@ function App() {
 
     const parts = [{ text: newQuestion }];
 
-    const result = await model
-      .generateContentStream({
-        contents: [{ role: "user", parts }],
-        generationConfig,
-      })
-      .catch(() => {
-        alert("Too Many Request in Given Time, Please Try Again.");
-        hideLoader();
-      });
+    if (isRunning) {
+      isRunning = false;
+      const result = await model
+        .generateContentStream({
+          contents: [{ role: "user", parts }],
+          generationConfig,
+        })
+        .catch(() => {
+          alert("Too Many Request in Given Time, Please Try Again.");
+          hideLoader();
+        });
 
-    let rawText = "";
+      let rawText = "";
 
-    hideLoader();
-    window.scrollTo({ top: 700, behavior: "smooth" });
-    for await (const chunk of result.stream) {
-      const chunkText = chunk.text();
-      rawText += chunkText;
-      setResponseValue([
-        {
-          question: newQuestion,
-          answer: marked.parse(rawText),
-        },
-        ...responseValue,
-      ]);
+      hideLoader();
+      let x = 100;
+      for await (const chunk of result.stream) {
+        const chunkText = chunk.text();
+        rawText += chunkText;
+        setResponseValue([
+          {
+            question: newQuestion,
+            answer: marked.parse(rawText),
+          },
+          ...responseValue,
+        ]);
+        window.scrollTo({ top: (x += 200), behavior: "smooth" });
+      }
+      setNewQuestion("");
+      isRunning = true;
+    } else {
+      alert("Too Many Request At One Time.");
+      hideLoader();
     }
-    setNewQuestion("");
   };
 
   function showLoader() {
