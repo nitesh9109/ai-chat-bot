@@ -6,9 +6,7 @@ import { marked } from "marked";
 import hljs from "highlight.js";
 import "./App.css";
 import "highlight.js/styles/github-dark.css";
-
 // import "highlight.js/styles/stackoverflow-dark.css";
-// import 'highlight.js/styles/night-owl.css';
 
 let isRunning = true;
 
@@ -66,6 +64,7 @@ function App() {
       }
       setNewQuestion("");
       isRunning = true;
+      window.scrollTo({ top: (x += 100), behavior: "smooth" });
     } else {
       alert("Too Many Request At One Time.");
       hideLoader();
