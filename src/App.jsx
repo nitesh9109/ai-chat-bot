@@ -1,18 +1,18 @@
 import FormSection from "./Components/FormSection";
 import AnswerSection from "./Components/AnswerSection";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { marked } from "marked";
 import hljs from "highlight.js";
 import "./App.css";
-import "highlight.js/styles/github-dark.css";
-// import "highlight.js/styles/stackoverflow-dark.css";
+// import "highlight.js/styles/github-dark.css";
+import "highlight.js/styles/stackoverflow-dark.css";
 
 let isRunning = true;
 
 function App() {
   const [responseValue, setResponseValue] = useState([]);
-  const containerRef = useRef(null);
+  const [textResponse, setTextResponse] = useState('');
 
   useEffect(() => {
     hljs.highlightAll();
@@ -65,6 +65,7 @@ function App() {
       setNewQuestion("");
       isRunning = true;
       window.scrollTo({ top: (x += 100), behavior: "smooth" });
+      setTextResponse(rawText);
     } else {
       alert("Too Many Request At One Time.");
       hideLoader();
@@ -82,15 +83,23 @@ function App() {
   }
 
   return (
-    <div id="main-box" ref={containerRef}>
+    <div id="main-box">
       <div className="header-section">
         <div className="img img-container">
-          <img className="rotate-img" src="/google-ai-1.svg" alt="" />
+          <a href="https://makersuite.google.com" target="_blank">
+            <img className="rotate-img" src="/google-ai-1.svg" alt="" />
+          </a>
         </div>
         <h1>🤖 How Can I Help You Today? 🤖</h1>
       </div>
       <FormSection generateResponse={generateResponse} />
-      <AnswerSection responseValue={responseValue ? responseValue : []} />
+      <AnswerSection textResponse={textResponse} responseValue={responseValue ? responseValue : []} />
+      <p id="author">
+        Made By NiteshNagar{" "}
+        <a href="https://github.com/nitesh9109/ai-chat-bot" target="_blank">
+          Source Code
+        </a>
+      </p>
     </div>
   );
 }

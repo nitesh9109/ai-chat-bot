@@ -1,6 +1,6 @@
 import React from "react";
 
-function AnswerSection({ responseValue }) {
+function AnswerSection({ responseValue ,textResponse}) {
   function copyText(text) {
     window.navigator.clipboard.writeText(text);
   }
@@ -18,7 +18,7 @@ function AnswerSection({ responseValue }) {
                 className="answer"
                 dangerouslySetInnerHTML={{ __html: transformedText }}
               ></div>
-              <div onClick={() => copyText(value.answer)} className="copy-icon">
+              <div onClick={() => copyText(textResponse)} className="copy-icon">
                 <i className="fa-solid fa-copy"></i>
               </div>
             </div>

@@ -225,12 +225,26 @@ h2 {
 }
 
 
+
+#author {
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    column-gap: 40px;
+}
+
+
 /* Apply styles to the image container */
 .img-container {
     position: relative;
-    /* Required for absolute positioning of the image */
     animation: rotate 10s linear infinite;
-    /* Apply animation to the container */
+
+}
+
+.img-container :hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+    transition: all 0.5s ease-in-out;
 }
 
 /* Apply styles to the image */
