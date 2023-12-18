@@ -4,7 +4,7 @@ function FormSection({ generateResponse }) {
   const [newQuestion, setNewQuestion] = useState("");
 
   function handleKeyDown(e) {
-    if (e.key == "Enter") {
+    if (e.key == "Enter" && newQuestion.trim() && !e.shiftKey) {
       e.preventDefault();
       generateResponse(newQuestion, setNewQuestion);
       setNewQuestion("");

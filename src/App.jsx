@@ -12,7 +12,8 @@ let isRunning = true;
 
 function App() {
   const [responseValue, setResponseValue] = useState([]);
-  const [textResponse, setTextResponse] = useState('');
+  const [textResponse, setTextResponse] = useState("");
+  const [history, setHistory] = useState([]);
 
   useEffect(() => {
     hljs.highlightAll();
@@ -26,48 +27,55 @@ function App() {
     const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
     const generationConfig = {
-      temperature: 0.4,
+      temperature: 0.9,
       topK: 1,
       topP: 1,
       maxOutputTokens: 1000,
     };
 
-    const parts = [{ text: newQuestion }];
+    const parts = newQuestion;
 
     if (isRunning) {
       isRunning = false;
-      const result = await model
-        .generateContentStream({
-          contents: [{ role: "user", parts }],
-          generationConfig,
-        })
-        .catch(() => {
-          alert("Too Many Request in Given Time, Please Try Again.");
-          hideLoader();
-        });
 
-      let rawText = "";
+      const chat = model.startChat({
+        history,
+        generationConfig,
+      });
+
+      const result = await chat.sendMessageStream(parts).catch(() => {
+        alert("Too many requests within the given time. Please try again.");
+        hideLoader();
+      });
 
       hideLoader();
-      let x = 100;
+      let rawText = "";
+      let scrollTop = 100;
+
       for await (const chunk of result.stream) {
         const chunkText = chunk.text();
         rawText += chunkText;
+
         setResponseValue([
           {
-            question: newQuestion,
+            question: parts,
             answer: marked.parse(rawText),
           },
           ...responseValue,
         ]);
-        window.scrollTo({ top: (x += 200), behavior: "smooth" });
+
+        window.scrollTo({ top: (scrollTop += 200), behavior: "smooth" });
       }
+
       setNewQuestion("");
       isRunning = true;
-      window.scrollTo({ top: (x += 100), behavior: "smooth" });
+      window.scrollTo({ top: (scrollTop += 100), behavior: "smooth" });
       setTextResponse(rawText);
+
+      // Pushing history for multi-turn conversation
+      history.push({ role: "user", parts }, { role: "model", parts: rawText });
     } else {
-      alert("Too Many Request At One Time.");
+      alert("Too many requests at one time.");
       hideLoader();
     }
   };
@@ -93,7 +101,11 @@ function App() {
         <h1>🤖 How Can I Help You Today? 🤖</h1>
       </div>
       <FormSection generateResponse={generateResponse} />
-      <AnswerSection textResponse={textResponse} responseValue={responseValue ? responseValue : []} />
+      <AnswerSection
+        textResponse={textResponse}
+        responseValue={responseValue ? responseValue : []}
+      />
+      <hr className="hr-line" />
       <p id="author">
         Made By NiteshNagar{" "}
         <a href="https://github.com/nitesh9109/ai-chat-bot" target="_blank">
