@@ -8,19 +8,25 @@ import "./App.css";
 // import "highlight.js/styles/github-dark.css";
 import "highlight.js/styles/stackoverflow-dark.css";
 
-let isRunning = true;
-
 function App() {
   const [responseValue, setResponseValue] = useState([]);
   const [textResponse, setTextResponse] = useState("");
   const [history, setHistory] = useState([]);
+  const [isRunning, setIsRunning] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     hljs.highlightAll();
   }, [responseValue]);
 
   const generateResponse = async (newQuestion, setNewQuestion) => {
-    showLoader();
+    if (isRunning) {
+      alert("A request is already in progress. Please wait.");
+      return;
+    }
+
+    setIsRunning(true);
+
     const API_KEY = import.meta.env.VITE_API_KEY;
     const MODEL_NAME = "gemini-pro";
     const genAI = new GoogleGenerativeAI(API_KEY);
@@ -35,22 +41,19 @@ function App() {
 
     const parts = newQuestion;
 
-    if (isRunning) {
-      isRunning = false;
+    setIsLoading(true);
 
-      const chat = model.startChat({
-        history,
-        generationConfig,
-      });
+    const chat = model.startChat({
+      history,
+      generationConfig,
+    });
 
-      const result = await chat.sendMessageStream(parts).catch(() => {
-        alert("Too many requests within the given time. Please try again.");
-        hideLoader();
-      });
+    try {
+      const result = await chat.sendMessageStream(parts);
 
-      hideLoader();
       let rawText = "";
       let scrollTop = 100;
+      setIsLoading(false);
 
       for await (const chunk of result.stream) {
         const chunkText = chunk.text();
@@ -68,51 +71,54 @@ function App() {
       }
 
       setNewQuestion("");
-      isRunning = true;
       window.scrollTo({ top: (scrollTop += 100), behavior: "smooth" });
       setTextResponse(rawText);
 
       // Pushing history for multi-turn conversation
-      history.push({ role: "user", parts }, { role: "model", parts: rawText });
-    } else {
-      alert("Too many requests at one time.");
-      hideLoader();
+      // history.push({ role: "user", parts }, { role: "model", parts: rawText });
+      setHistory([
+        ...history,
+        { role: "user", parts },
+        { role: "model", parts: rawText },
+      ]);
+      setIsRunning(false);
+    } catch (error) {
+      alert("Too many requests within the given time. Please try again.");
+      console.error("Error occured: ", error);
+      setIsLoading(false);
+    } finally {
+      setIsRunning(false);
     }
   };
 
-  function showLoader() {
-    let spinner = document.querySelector(".spinner");
-    spinner.style.display = "block";
-  }
-
-  function hideLoader() {
-    let spinner = document.querySelector(".spinner");
-    spinner.style.display = "none";
-  }
-
   return (
-    <div id="main-box">
-      <div className="header-section">
-        <div className="img img-container">
-          <a href="https://makersuite.google.com" target="_blank">
-            <img className="rotate-img" src="/google-ai-1.svg" alt="" />
-          </a>
-        </div>
-        <h1>🤖 How Can I Help You Today? 🤖</h1>
+    <>
+      <div className="main">
+        <div className={`spinner ${isLoading ? "show" : ""}`}></div>
       </div>
-      <FormSection generateResponse={generateResponse} />
-      <AnswerSection
-        textResponse={textResponse}
-        responseValue={responseValue ? responseValue : []}
-      />
-      <hr className="hr-line" />
-      <p id="author">
-        Made By NiteshNagar{" "}
-        <a href="https://github.com/nitesh9109/ai-chat-bot" target="_blank">
-          Source Code
-        </a>
-      </p>
-    </div>
+      <div id="main-box">
+        <div className="header-section">
+          <div className="img img-container">
+            <a href="https://makersuite.google.com" target="_blank">
+              <img className="rotate-img" src="/google-ai-1.svg" alt="" />
+            </a>
+          </div>
+          <h1>🤖 How Can I Help You Today? 🤖</h1>
+        </div>
+        <FormSection generateResponse={generateResponse} />
+        <AnswerSection
+          textResponse={textResponse}
+          responseValue={responseValue}
+        />
+        <hr className="hr-line" />
+        <p id="author">
+          Made By NiteshNagar{" "}
+          <a href="https://github.com/nitesh9109/ai-chat-bot" target="_blank">
+            Source Code
+          </a>
+        </p>
+      </div>
+    </>
   );
 }
 

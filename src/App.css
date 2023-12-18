@@ -147,6 +147,7 @@ p {
 pre {
     white-space: pre-wrap;
     /* word-wrap: break-word;  */
+    font-family: 'Poppins', sans-serif;
 }
 
 code {
@@ -220,7 +221,7 @@ h2 {
     .header-section,
     .form-section,
     .answer-section {
-        padding: 15px;
+        padding: 8px;
     }
 }
 
@@ -239,7 +240,8 @@ h2 {
 .img-container {
     position: relative;
     animation: rotate 10s linear infinite;
-
+    width: 150px;
+    margin: 0 auto;
 }
 
 .img-container :hover {
@@ -247,15 +249,11 @@ h2 {
     transition: all 0.5s ease-in-out;
 }
 
-/* Apply styles to the image */
 .rotate-image {
     width: 100%;
-    /* Adjust dimensions if needed */
     height: 100%;
-    /* Adjust dimensions if needed */
 }
 
-/* Define the rotation animation */
 @keyframes rotate {
     from {
         transform: rotate(0deg);
@@ -263,5 +261,55 @@ h2 {
 
     to {
         transform: rotate(360deg);
+    }
+}
+
+
+.main {
+    display: grid;
+    place-items: center;
+    /* height: 100vh; */
+}
+
+.spinner {
+    height: 60px;
+    width: 60px;
+    position: fixed;
+    top: 50%;
+    display: none;
+    /* transform: translate(-50%, -50%); */
+    animation: rotation 1s infinite linear;
+    border: 6px solid rgba(255, 255, 255);
+    border-radius: 100%;
+    z-index: 9999;
+    /* Ensure the spinner is above other content */
+}
+
+.spinner:before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: -6px;
+    top: -6px;
+    height: 100%;
+    width: 100%;
+    border-top: 6px solid rgb(100, 100, 241);
+    border-left: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-radius: 100%;
+}
+
+.spinner.show {
+    display: block;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(359deg);
     }
 }

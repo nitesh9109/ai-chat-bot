@@ -1,6 +1,6 @@
 import React from "react";
 
-function AnswerSection({ responseValue ,textResponse}) {
+function AnswerSection({ responseValue, textResponse }) {
   function copyText(text) {
     window.navigator.clipboard.writeText(text);
   }
@@ -13,7 +13,7 @@ function AnswerSection({ responseValue ,textResponse}) {
           let transformedText = value.answer;
           return (
             <div className="answer-section" key={index}>
-              <div className="question">{value.question}</div>
+              <pre className="question">{value.question}</pre>
               <div
                 className="answer"
                 dangerouslySetInnerHTML={{ __html: transformedText }}
